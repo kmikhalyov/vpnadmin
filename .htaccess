@@ -1,0 +1,4 @@
+#Options +FollowSymLinks -MultiViews
+RewriteEngine On
+RewriteBase /api
+RewriteRule ^api/(.*)$ http://vpnadmin-api/web/api/$1 [P,L]

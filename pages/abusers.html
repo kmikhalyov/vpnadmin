@@ -1,0 +1,64 @@
+<!-- Page Heading -->
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Abusers</h1>
+    <form>
+      <ol class="breadcrumb">
+        <li>
+          <input class="form-control" type="text" value="" id="reportMonth">
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary btn-md" id="showReport">Show report</button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary btn-md" id="generateData">Generate data</button>
+        </li>
+      </ol>
+    </form>
+  </div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+  <div class="table-responsive">
+    <table id="abusersTable" class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Company</th>
+          <th>Used</th>
+          <th>Quota</th>
+        </tr>
+      </thead>
+      <tbody >
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- /.row -->
+
+<script>
+  app.handler('abusers', function() {
+    // Set default month.
+    var now = new Date();
+    $('#reportMonth').val(now.getTime() / 1000);
+    $('#reportMonth').monthpicker({
+        minYear: now.getFullYear() - 1,
+        maxYear: now.getFullYear()
+    });
+
+    $('#showReport').on('click', function () {
+      app.getHandler('abusers').call();
+    });
+    $('#generateData').on('click', abusers.generateData);
+
+    return function() {
+      var year = $('select.yearpick').val();
+      var month = parseInt($('select.monthpick').val()) + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+      abusers.showReport(year, month);
+    };
+  });
+</script>
